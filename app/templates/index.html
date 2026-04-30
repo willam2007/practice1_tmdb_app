@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>TMDB — База данных фильмов</title>
+</head>
+<body>
+
+{% macro render_table(head, body) %}
+<table>
+    <thead>
+        <tr>
+            {% for col in head %}
+            <th>{{ col }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in body %}
+        <tr>
+            {% for item in row %}
+            <td>{{ item }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endmacro %}
+
+<h1>The Movie Database (TMDB)</h1>
+
+<nav>
+    <a href="#languages">Языки</a>
+    <a href="#genres">Жанры</a>
+    <a href="#movies">Фильмы</a>
+    <a href="#query1">Запрос 1</a>
+    <a href="#query2">Запрос 2</a>
+    <a href="#query3">Запрос 3</a>
+    <a href="#query4">Запрос 4</a>
+    <a href="#query5">Запрос 5</a>
+</nav>
+
+<section id="languages">
+    <h2>Языки</h2>
+    {{ render_table(languages_head, languages_body) }}
+</section>
+
+<section id="genres">
+    <h2>Жанры</h2>
+    {{ render_table(genres_head, genres_body) }}
+</section>
+
+<section id="movies">
+    <h2>Фильмы</h2>
+    {{ render_table(movies_head, movies_body) }}
+</section>
+
+<section id="query1">
+    <h2>Запрос 1 — Фильмы с рейтингом выше 8.0, вышедшие после 2000 года</h2>
+    <p class="query-desc">Выборка из связанных таблиц с фильтрацией по рейтингу и году, сортировка по убыванию рейтинга.</p>
+    {{ render_table(query1_head, query1_body) }}
+</section>
+
+<section id="query2">
+    <h2>Запрос 2 — Прибыль фильмов (Сборы − Бюджет)</h2>
+    <p class="query-desc">Вычисление по строкам: прибыль рассчитывается как разница сборов и бюджета. Только фильмы с известными данными.</p>
+    {{ render_table(query2_head, query2_body) }}
+</section>
+
+<section id="query3">
+    <h2>Запрос 3 — Статистика по жанрам</h2>
+    <p class="query-desc">Группировка по жанру. Агрегатные функции: количество фильмов, средний и максимальный рейтинг.</p>
+    {{ render_table(query3_head, query3_body) }}
+</section>
+
+<section id="query4">
+    <h2>Запрос 4 — Языки с более чем 3 фильмами и средним рейтингом выше 7.5</h2>
+    <p class="query-desc">Группировка с фильтрацией: WHERE ограничивает фильмы годом выпуска (с 1990), HAVING фильтрует сгруппированные результаты.</p>
+    {{ render_table(query4_head, query4_body) }}
+</section>
+
+<section id="query5">
+    <h2>Запрос 5 — Фильмы с рейтингом выше среднего</h2>
+    <p class="query-desc">Вложенный запрос: средний рейтинг по всей базе вычисляется подзапросом и используется как порог фильтрации.</p>
+    {{ render_table(query5_head, query5_body) }}
+</section>
+
+</body>
+</html>
