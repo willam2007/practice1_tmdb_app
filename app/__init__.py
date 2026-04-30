@@ -35,14 +35,14 @@ def _seed_data():
     genre_map = {}
 
     for _, row in df.iterrows():
-        # Язык
+        # язык
         lang_name = str(row['original_language'])
         if lang_name not in lang_map:
             lang = Language(name=lang_name)
             db.session.add(lang)
             lang_map[lang_name] = lang
 
-        # Жанры
+        # жанры
         for genre_name in str(row['genres']).split(','):
             genre_name = genre_name.strip()
             if genre_name and genre_name not in genre_map:
